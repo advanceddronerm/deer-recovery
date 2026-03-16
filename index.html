@@ -2036,7 +2036,7 @@
         <div class="mgal-item"><img src="assets/1000043001.jpg" alt="Drone videography"></div>
         <div class="mgal-item"><img src="assets/1000043004.jpg" alt="Aerial landscape"></div>
         <div style="grid-column:1/-1;position:relative;background:#000;overflow:hidden;">
-          <video id="mediaVid1" preload="metadata" playsinline style="width:100%;max-height:280px;object-fit:cover;display:block;">
+          <video id="mediaVid1" preload="metadata" playsinline style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
             <source src="assets/1000043006.mp4" type="video/mp4">
           </video>
           <div class="video-play-btn" id="mediaPlayBtn1" onclick="playVideo('mediaVid1','mediaPlayBtn1')" style="border-color:var(--blue);">
@@ -2046,7 +2046,7 @@
           </div>
         </div>
         <div style="grid-column:1/-1;position:relative;background:#000;overflow:hidden;margin-top:4px;">
-          <video id="mediaVid2" preload="metadata" playsinline style="width:100%;max-height:280px;object-fit:cover;display:block;">
+          <video id="mediaVid2" preload="metadata" playsinline style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
             <source src="assets/media-video-2.mp4" type="video/mp4">
           </video>
           <div class="video-play-btn" id="mediaPlayBtn2" onclick="playVideo('mediaVid2','mediaPlayBtn2')" style="border-color:var(--blue);">
@@ -2205,10 +2205,16 @@
     function playVideo(videoId, btnId) {
       const video = document.getElementById(videoId);
       const btn = document.getElementById(btnId);
-      video.play();
-      btn.classList.add('hidden');
+      if (video.paused) {
+        video.play();
+        btn.classList.add('hidden');
+      } else {
+        video.pause();
+        btn.classList.remove('hidden');
+      }
       video.addEventListener('pause', () => btn.classList.remove('hidden'), { once: false });
       video.addEventListener('ended', () => btn.classList.remove('hidden'), { once: false });
+      video.onclick = () => playVideo(videoId, btnId);
     }
   </script>
 
